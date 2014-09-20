@@ -40,7 +40,8 @@ import com.philips.lighting.model.PHLightState;
  * @author SteveyO
  * 
  */
-public class MyApplicationActivity extends Activity implements ILight, IStrobe, ILightColor, ILightDim {
+public class MyApplicationActivity extends Activity implements ILight, IStrobe,
+		ILightColor, ILightDim {
 	private PHHueSDK phHueSDK;
 	private static final int MAX_HUE = 65535;
 	public static final String TAG = "QuickStart";
@@ -56,14 +57,11 @@ public class MyApplicationActivity extends Activity implements ILight, IStrobe, 
 		setTitle(R.string.app_name);
 		setContentView(R.layout.activity_main);
 		phHueSDK = PHHueSDK.create();
-		
-		
-		
+
 	}
-	
+
 	public void onResume() {
 		super.onResume();
-		
 
 		PHBridge bridge = phHueSDK.getSelectedBridge();
 		PHLightState lightState = new PHLightState();
@@ -72,19 +70,16 @@ public class MyApplicationActivity extends Activity implements ILight, IStrobe, 
 		lightState.setOn(true);
 		lightState.setBrightness(50);
 		lightState.setHue(46920);
-		bridge.updateLightState(allLights.get(2), lightState,
-				listener);
-		
-		
+		bridge.updateLightState(allLights.get(2), lightState, listener);
+
 	}
 
 	public void turnLeft(View view) {
 		PHBridge bridge = phHueSDK.getSelectedBridge();
 
-		
 		final List<PHLight> allLights = bridge.getResourceCache()
 				.getAllLights();
-		
+
 		for (int i = 0; i < 5; i++) {
 			Handler handler = new Handler();
 			handler.postDelayed(new Runnable() {
@@ -93,7 +88,7 @@ public class MyApplicationActivity extends Activity implements ILight, IStrobe, 
 					PHBridge bridge = phHueSDK.getSelectedBridge();
 
 					PHLightState lightState = new PHLightState();
-					//lightState.setTransitionTime(800);
+					// lightState.setTransitionTime(800);
 					lightState.setOn(true);
 					lightState.setBrightness(50);
 					lightState.setHue(0);
@@ -102,7 +97,7 @@ public class MyApplicationActivity extends Activity implements ILight, IStrobe, 
 					lightState.setEffectMode(PHLightEffectMode.EFFECT_NONE);
 					bridge.updateLightState(allLights.get(1), lightState,
 							listener);
-							
+
 				}
 
 			}, timeLeft += timeInt); // adding one sec delay
@@ -122,34 +117,35 @@ public class MyApplicationActivity extends Activity implements ILight, IStrobe, 
 
 				}
 
-			}, 6*timeInt); // adding one sec delay
+			}, 6 * timeInt); // adding one sec delay
 		}
-		
-		timeLeft=0;
-		
+
+		timeLeft = 0;
 
 	}
-	
-	public void breakLight(View view){
-        PHBridge bridge = phHueSDK.getSelectedBridge();
 
-		  List<PHLight> allLights = bridge.getResourceCache().getAllLights();
-	        Random rand = new Random();
-	        
-	        for (PHLight light : allLights) {
-	            PHLightState lightState = new PHLightState();
-	        	lightState.setOn(false);
-				lightState.setBrightness(50);
-	            lightState.setHue(0);
-	            // To validate your lightstate is valid (before sending to the bridge) you can use:  
-	            // String validState = lightState.validateState();
-	            bridge.updateLightState(light, lightState, listener);
-	            //  bridge.updateLightState(light, lightState);   // If no bridge response is required then use this simpler form.
-	        }
+	public void breakLight(View view) {
+		PHBridge bridge = phHueSDK.getSelectedBridge();
+
+		List<PHLight> allLights = bridge.getResourceCache().getAllLights();
+		Random rand = new Random();
+
+		for (PHLight light : allLights) {
+			PHLightState lightState = new PHLightState();
+			lightState.setOn(false);
+			lightState.setBrightness(50);
+			lightState.setHue(0);
+			// To validate your lightstate is valid (before sending to the
+			// bridge) you can use:
+			// String validState = lightState.validateState();
+			bridge.updateLightState(light, lightState, listener);
+			// bridge.updateLightState(light, lightState); // If no bridge
+			// response is required then use this simpler form.
+		}
 	}
-	
+
 	public void accel(View view) {
-		
+
 		PHBridge bridge = phHueSDK.getSelectedBridge();
 		PHLightState lightState = new PHLightState();
 		final List<PHLight> allLights = bridge.getResourceCache()
@@ -157,10 +153,8 @@ public class MyApplicationActivity extends Activity implements ILight, IStrobe, 
 		lightState.setOn(true);
 		lightState.setBrightness(50);
 		lightState.setHue(46920);
-		bridge.updateLightState(allLights.get(2), lightState,
-				listener);
+		bridge.updateLightState(allLights.get(2), lightState, listener);
 	}
-
 
 	// Colors
 	// 0 : red
@@ -169,12 +163,11 @@ public class MyApplicationActivity extends Activity implements ILight, IStrobe, 
 	// 39000: cool color
 
 	public void turnRight(View view) {
-PHBridge bridge = phHueSDK.getSelectedBridge();
+		PHBridge bridge = phHueSDK.getSelectedBridge();
 
-		
 		final List<PHLight> allLights = bridge.getResourceCache()
 				.getAllLights();
-		
+
 		for (int i = 0; i < 5; i++) {
 			Handler handler = new Handler();
 			handler.postDelayed(new Runnable() {
@@ -183,7 +176,7 @@ PHBridge bridge = phHueSDK.getSelectedBridge();
 					PHBridge bridge = phHueSDK.getSelectedBridge();
 
 					PHLightState lightState = new PHLightState();
-					//lightState.setTransitionTime(800);
+					// lightState.setTransitionTime(800);
 					lightState.setOn(true);
 					lightState.setBrightness(50);
 					lightState.setHue(0);
@@ -192,7 +185,7 @@ PHBridge bridge = phHueSDK.getSelectedBridge();
 					lightState.setEffectMode(PHLightEffectMode.EFFECT_NONE);
 					bridge.updateLightState(allLights.get(0), lightState,
 							listener);
-							
+
 				}
 
 			}, timeLeft += timeInt); // adding one sec delay
@@ -212,11 +205,11 @@ PHBridge bridge = phHueSDK.getSelectedBridge();
 
 				}
 
-			}, 6*timeInt); // adding one sec delay
+			}, 6 * timeInt); // adding one sec delay
 		}
-		
-		timeLeft=0;
-		
+
+		timeLeft = 0;
+
 	}
 
 	// If you want to handle the response from the bridge, create a
@@ -267,24 +260,24 @@ PHBridge bridge = phHueSDK.getSelectedBridge();
 	@Override
 	public void Dim(float value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setColor(float h, float s) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void StrobeOn() {
-			
+
 	}
 
 	@Override
 	public void StrobeOff() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -296,7 +289,7 @@ PHBridge bridge = phHueSDK.getSelectedBridge();
 	@Override
 	public void Off() {
 		// TODO Auto-generated method stub
-		
+
 	}
 	
 	public void initAutobrakes() {
