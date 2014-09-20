@@ -36,10 +36,9 @@ public class MyApplicationActivity extends Activity {
 	private static final int MAX_HUE = 65535;
 	public static final String TAG = "QuickStart";
 	public EditText edit;
-	public static int timeRight= 1000;
-	public static int timeLeft= 1000;
-	final static int timeInt=300;
-
+	public static int timeRight = 1000;
+	public static int timeLeft = 1000;
+	final static int timeInt = 800;
 
 	// Will is taking over
 	@Override
@@ -49,133 +48,60 @@ public class MyApplicationActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		edit = (EditText) findViewById(R.id.editText1);
 		phHueSDK = PHHueSDK.create();
-		Button randomButton;
-		randomButton = (Button) findViewById(R.id.buttonRand);
-		randomButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				randomLights();
-			}
-
-		});
-
+		
+		
+		
 	}
 	
+	public void onResume() {
+		super.onResume();
+		
+		PHBridge bridge = phHueSDK.getSelectedBridge();
+		PHLightState lightState = new PHLightState();
+		final List<PHLight> allLights = bridge.getResourceCache()
+				.getAllLights();
+		lightState.setOn(true);
+		lightState.setBrightness(50);
+		lightState.setHue(12000);
+		bridge.updateLightState(allLights.get(2), lightState,
+				listener);
+		
+		
+	}
+
 	public void turnLeft(View view) {
+		Toast.makeText(this, "yo", Toast.LENGTH_LONG).show();
 		PHBridge bridge = phHueSDK.getSelectedBridge();
 
 		final List<PHLight> allLights = bridge.getResourceCache()
 				.getAllLights();
-		Random rand = new Random();
 
-		
-
-		
-
+		for (int i = 0; i < 3; i++) {
 			Handler handler = new Handler();
 			handler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					Random rand = new Random();
 
 					PHBridge bridge = phHueSDK.getSelectedBridge();
 					PHLightState lightState = new PHLightState();
 					lightState.setOn(true);
-
 					lightState.setBrightness(50);
 					lightState.setHue(0);
 					bridge.updateLightState(allLights.get(1), lightState,
 							listener);
-
+							
 				}
 
-			}, timeLeft); // adding one sec delay
+			}, timeLeft += timeInt); // adding one sec delay
 
 			Handler handler1 = new Handler();
 			handler1.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					Random rand = new Random();
 
 					PHBridge bridge = phHueSDK.getSelectedBridge();
 					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
-					lightState.setBrightness(50);
-
-					
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(2), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-					bridge.updateLightState(allLights.get(1), lightState1,
-							listener);
-					
-					
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler2 = new Handler();
-
-			handler2.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setBrightness(50);
-					lightState.setOn(true);
-
-
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(0), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(2), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			Handler handler3 = new Handler();
-
-			handler3.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();				
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(0), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			Handler handler4 = new Handler();
-			handler4.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
+					lightState.setOn(false);
 					lightState.setBrightness(50);
 					lightState.setHue(0);
 					bridge.updateLightState(allLights.get(1), lightState,
@@ -183,186 +109,39 @@ public class MyApplicationActivity extends Activity {
 
 				}
 
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler5 = new Handler();
-			handler5.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
-					lightState.setBrightness(50);
-
-					
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(2), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-					bridge.updateLightState(allLights.get(1), lightState1,
-							listener);
-					
-					
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler6 = new Handler();
-
-			handler6.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setBrightness(50);
-					lightState.setOn(true);
-
-
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(0), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(2), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			Handler handler7 = new Handler();
-
-			handler7.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();				
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(0), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			
-			Handler handler8 = new Handler();
-			handler8.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
-					lightState.setBrightness(50);
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(1), lightState,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler9 = new Handler();
-			handler9.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
-					lightState.setBrightness(50);
-
-					
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(2), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-					bridge.updateLightState(allLights.get(1), lightState1,
-							listener);
-					
-					
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler10 = new Handler();
-
-			handler10.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setBrightness(50);
-					lightState.setOn(true);
-
-
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(0), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(2), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			Handler handler11 = new Handler();
-
-			handler11.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();				
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(0), lightState1,
-							listener);
-					
-					timeLeft=1000;
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-
-			
-			
-
+			}, timeLeft += timeInt); // adding one sec delay
 		}
+		
+		timeLeft=1000;
+
+	}
+	
+	public void breakLight(){
+        PHBridge bridge = phHueSDK.getSelectedBridge();
+
+		  List<PHLight> allLights = bridge.getResourceCache().getAllLights();
+	        Random rand = new Random();
+	        
+	        for (PHLight light : allLights) {
+	            PHLightState lightState = new PHLightState();
+	        	lightState.setOn(false);
+				lightState.setBrightness(50);
+	            lightState.setHue(0);
+	            // To validate your lightstate is valid (before sending to the bridge) you can use:  
+	            // String validState = lightState.validateState();
+	            bridge.updateLightState(light, lightState, listener);
+	            //  bridge.updateLightState(light, lightState);   // If no bridge response is required then use this simpler form.
+	        }
+	}
+
+
 	// Colors
 	// 0 : red
 	// 49000: cool color
 	// 59000: cool color
 	// 39000: cool color
 
-	public void randomLights() {
+	public void turnRight(View view) {
 		Toast.makeText(this, "yo", Toast.LENGTH_LONG).show();
 		PHBridge bridge = phHueSDK.getSelectedBridge();
 
@@ -370,10 +149,7 @@ public class MyApplicationActivity extends Activity {
 				.getAllLights();
 		Random rand = new Random();
 
-		
-
-		
-
+		for (int i = 0; i < 3; i++) {
 			Handler handler = new Handler();
 			handler.postDelayed(new Runnable() {
 				@Override
@@ -383,15 +159,16 @@ public class MyApplicationActivity extends Activity {
 					PHBridge bridge = phHueSDK.getSelectedBridge();
 					PHLightState lightState = new PHLightState();
 					lightState.setOn(true);
-
 					lightState.setBrightness(50);
 					lightState.setHue(0);
 					bridge.updateLightState(allLights.get(0), lightState,
 							listener);
+					
+					
 
 				}
 
-			}, timeLeft); // adding one sec delay
+			}, timeLeft += timeInt); // adding one sec delay
 
 			Handler handler1 = new Handler();
 			handler1.postDelayed(new Runnable() {
@@ -401,82 +178,7 @@ public class MyApplicationActivity extends Activity {
 
 					PHBridge bridge = phHueSDK.getSelectedBridge();
 					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
-					lightState.setBrightness(50);
-
-					
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(2), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-					bridge.updateLightState(allLights.get(0), lightState1,
-							listener);
-					
-					
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler2 = new Handler();
-
-			handler2.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setBrightness(50);
-					lightState.setOn(true);
-
-
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(1), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(2), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			Handler handler3 = new Handler();
-
-			handler3.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();				
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(1), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			Handler handler4 = new Handler();
-			handler4.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
+					lightState.setOn(false);
 					lightState.setBrightness(50);
 					lightState.setHue(0);
 					bridge.updateLightState(allLights.get(0), lightState,
@@ -484,181 +186,12 @@ public class MyApplicationActivity extends Activity {
 
 				}
 
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler5 = new Handler();
-			handler5.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
-					lightState.setBrightness(50);
-
-					
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(2), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-					bridge.updateLightState(allLights.get(0), lightState1,
-							listener);
-					
-					
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler6 = new Handler();
-
-			handler6.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setBrightness(50);
-					lightState.setOn(true);
-
-
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(1), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(2), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			Handler handler7 = new Handler();
-
-			handler7.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();				
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(1), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			
-			Handler handler8 = new Handler();
-			handler8.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
-					lightState.setBrightness(50);
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(0), lightState,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler9 = new Handler();
-			handler9.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setOn(true);
-
-					lightState.setBrightness(50);
-
-					
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(2), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-					bridge.updateLightState(allLights.get(0), lightState1,
-							listener);
-					
-					
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-			Handler handler10 = new Handler();
-
-			handler10.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Random rand = new Random();
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();
-					PHLightState lightState = new PHLightState();
-					lightState.setBrightness(50);
-					lightState.setOn(true);
-
-
-					lightState.setHue(0);
-					bridge.updateLightState(allLights.get(1), lightState,
-							listener);
-					
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(2), lightState1,
-							listener);
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-			
-			Handler handler11 = new Handler();
-
-			handler11.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-
-					PHBridge bridge = phHueSDK.getSelectedBridge();				
-					PHLightState lightState1 = new PHLightState();
-					lightState1.setOn(false);
-
-					bridge.updateLightState(allLights.get(1), lightState1,
-							listener);
-					
-					timeLeft=1000;
-
-				}
-
-			}, timeLeft+=timeInt); // adding one sec delay
-
-
-			
-			
-
+			}, timeLeft += timeInt); // adding one sec delay
 		}
+		
+		timeLeft=1000;
 
-	
+	}
 
 	// If you want to handle the response from the bridge, create a
 	// PHLightListener object.
