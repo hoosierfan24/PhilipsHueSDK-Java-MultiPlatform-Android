@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.philips.lighting.hue.listener.PHLightListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -30,6 +31,7 @@ public class MyApplicationActivity extends Activity {
     private PHHueSDK phHueSDK;
     private static final int MAX_HUE=65535;
     public static final String TAG = "QuickStart";
+    public EditText edit;
     
     //Will is taking over
     @Override
@@ -37,6 +39,7 @@ public class MyApplicationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
+        edit = (EditText) findViewById(R.id.editText1);
         phHueSDK = PHHueSDK.create();
         Button randomButton;
         randomButton = (Button) findViewById(R.id.buttonRand);
@@ -51,6 +54,12 @@ public class MyApplicationActivity extends Activity {
 
     }
 
+    //Colors 
+    //0 : red
+    // 49000: cool color
+    //59000: cool color
+    // 39000: cool color
+    
     public void randomLights() {
         PHBridge bridge = phHueSDK.getSelectedBridge();
 
@@ -59,7 +68,8 @@ public class MyApplicationActivity extends Activity {
         
         for (PHLight light : allLights) {
             PHLightState lightState = new PHLightState();
-            lightState.setHue(rand.nextInt(MAX_HUE));
+          //  lightState.setHue(rand.nextInt(MAX_HUE));
+            lightState.setHue(Integer.parseInt(edit.getText().toString()));
             // To validate your lightstate is valid (before sending to the bridge) you can use:  
             // String validState = lightState.validateState();
             bridge.updateLightState(light, lightState, listener);
