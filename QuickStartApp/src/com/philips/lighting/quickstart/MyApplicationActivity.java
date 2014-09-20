@@ -57,7 +57,7 @@ public class MyApplicationActivity extends Activity implements ILight, IStrobe,
 		setTitle(R.string.app_name);
 		setContentView(R.layout.activity_main);
 		phHueSDK = PHHueSDK.create();
-
+		initAutobrakes();
 	}
 
 	public void onResume() {
