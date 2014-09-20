@@ -1,0 +1,6 @@
+*.apk
+*.class
+.gradle
+build
+bin
+gen
