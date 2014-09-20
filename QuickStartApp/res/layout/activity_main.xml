@@ -8,43 +8,45 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PHMyApplicationActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_click_random_button" />
-    
     <Button
         android:id="@+id/buttonRand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:onClick="turnRight"
-        android:text="turn right" android:paddingLeft="10dp" android:paddingRight="10dp"/>
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonRand"
-        android:layout_below="@+id/buttonRand"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="74dp"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="turn right" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="62dp"
+        android:layout_alignLeft="@+id/buttonRand"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="72dp"
         android:onClick="turnLeft"
         android:text="turn left" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonRand"
+        android:layout_below="@+id/buttonRand"
+        android:layout_marginTop="58dp"
+        android:onClick="breakLight"
+        android:text="Break Lights" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/button1"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="22dp"
+        android:onClick="accel"
+        android:text="Accel" />
 
 </RelativeLayout>
