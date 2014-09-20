@@ -31,6 +31,7 @@ public class MyApplicationActivity extends Activity {
     private static final int MAX_HUE=65535;
     public static final String TAG = "QuickStart";
     
+    //Will is taking over
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
