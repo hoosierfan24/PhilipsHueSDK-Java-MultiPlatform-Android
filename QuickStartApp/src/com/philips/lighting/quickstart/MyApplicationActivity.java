@@ -10,6 +10,10 @@ import java.util.Map;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -294,4 +298,64 @@ PHBridge bridge = phHueSDK.getSelectedBridge();
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void initAutobrakes() {
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+            Location lastLocation = null;
+            double lastSpeed = -1;
+
+            @Override
+            public void onLocationChanged(Location location) {
+                if (lastLocation != null) {
+                    double distance = distanceBetween(location, lastLocation);
+                    Log.d("Distance", String.valueOf(distance));
+
+                    double speed = distance * (location.getTime() - lastLocation.getTime());
+                    Log.d("Speed", String.valueOf(speed));
+
+                    if (speed < 1 || (lastSpeed >= 0
+                            && speed - lastSpeed < -0.5)) {
+                        breakLight(null);
+                    } else {
+                        accel(null);
+                    }
+
+                    lastSpeed = speed;
+                }
+
+                lastLocation = location;
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        });
+	}
+
+    public static double distanceBetween(Location loc1, Location loc2) {
+        double r = 6371;
+        double lat1 = Math.toRadians(loc1.getLatitude());
+        double lat2 = Math.toRadians(loc2.getLatitude());
+        double deltaLat = Math.toRadians(loc2.getLatitude() - loc1.getLatitude());
+        double deltaLon = Math.toRadians(loc2.getLongitude() - loc1.getLongitude());
+
+        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                        Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return r * c;
+    }
 }
